@@ -25,3 +25,4 @@ npm run dev
 💡 Notes
 Ensure you have Node.js and npm installed.
 Update any .env files if required (e.g., database URI, API keys).
+# divinelms
