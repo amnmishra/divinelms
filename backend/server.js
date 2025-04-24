@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from 'cloudinary';
-
+import connectDB from './config/db.js'
 
 
 import studentRoutes from './routes/studentRoutes.js';
@@ -46,11 +46,7 @@ app.use("/api/admin", adminRoutes);
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB Connected Successfully'))
+connectDB().then(() => console.log('MongoDB Connected Successfully'))
 .catch(err => console.error('MongoDB Connection Error:', err));
 
 
