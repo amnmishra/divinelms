@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { motion, AnimatePresence } from "framer-motion";
 import RegisterModal from "./RegisterModal";
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 const LoginModal = ({ isOpen, onClose }) => {
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -34,7 +36,7 @@ const LoginModal = ({ isOpen, onClose }) => {
     setErrorMsg("");
 
     try {
-      const res = await axios.post("http://localhost:4010/api/student/login", formData);
+      const res = await axios.post(`${API_URL}/api/student/login`, formData);
       const { token, student } = res.data;
 
       localStorage.setItem("token", token);

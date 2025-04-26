@@ -10,6 +10,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns';
 import Select from 'react-select';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 const RegisterModal = ({ isOpen, onClose, value, onChange }) => {
 
 
@@ -120,7 +122,7 @@ const RegisterModal = ({ isOpen, onClose, value, onChange }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const apiEndpoint = `http://localhost:4010/api/${formData.userType.toLowerCase()}/register`;
+      const apiEndpoint = `${API_URL}/api/${formData.userType.toLowerCase()}/register`;
       const res = await axios.post(apiEndpoint, formData);
 
       toast.success(res.data.message || "Registration successful!");
