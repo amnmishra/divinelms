@@ -41,7 +41,6 @@ const Navbar = () => {
     ],
     admin: [
       { to: "/admin/dashboard", label: "Dashboard" },
-      { to: "/admin/users", label: "Manage Users" },
     ],
   };
 

@@ -5,6 +5,7 @@ import {
     adminLogin,
     getAllStudents,
     deleteUser,
+    getAllTeachers,
   } from "../controllers/adminController.js";
 
 const router = express.Router();
@@ -12,6 +13,7 @@ const router = express.Router();
 router.post("/register", registerAdmin)
 router.post("/login", adminLogin);
 router.get("/students", adminAuth, getAllStudents);
+router.get("/teachers", adminAuth, getAllTeachers);
 router.delete("/delete/:role/:id", adminAuth, deleteUser);
 
 export default router;

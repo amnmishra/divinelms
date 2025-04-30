@@ -35,6 +35,7 @@ const StudentDashboard = ({ student: initialStudent }) => {
           <li><Link to="/student/dashboard/profile-settings" className="flex items-center gap-2 text-red-800 hover:text-red-700">🧾 Profile & Settings</Link></li>
           <li><Link to="/student/dashboard/messages" className="flex items-center gap-2 text-red-800 hover:text-red-700">💬 Messages</Link></li>
           <li><Link to="/student/dashboard/live-classes" className="flex items-center gap-2 text-red-800 hover:text-red-700">🎥 Live Classes</Link></li>
+          <li><Link to="/student/dashboard/update-profile" className="flex items-center gap-2 text-red-800 hover:text-red-700">👤 Update Profile</Link></li>
         </ul>
       </div>
 

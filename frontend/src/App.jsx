@@ -1,22 +1,28 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+// Layout Components
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
 
+// Public Pages
+import Home from "./components/Home";
+import CoursePage from "./pages/CoursePage";
+
+// Auth Pages
 import LoginModal from "./pages/authPage/LoginModal";
 import RegisterModal from "./pages/authPage/RegisterModal";
 
+// Admin Pages
 import AdminLogin from "./components/admin/AdminLogin";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import ManageStudents from "./components/admin/ManageStudents";
+import ManageTeachers from "./components/admin/Manage/manageTeachers";
 import AdminPrivateRoute from "./components/admin/AdminPrivateRoute";
-import ManageUsers from "./components/admin/ManageUsers";
 
-import CoursePage from "./pages/CoursePage";
-
+// Student Pages
 import StudentDashboard from "./components/Student/Dashboard/StudentDashboard";
 import PrivateRoute from "./components/PrivateRoute";
 
-// Student Sidebar Links Routes 
+// Student Sidebar Routes
 import Attendance from "./components/Student/Attendance";
 import Assignment from "./components/Student/Assignment";
 import ClassSchedule from "./components/Student/ClassSchedule";
@@ -24,7 +30,7 @@ import Grades from "./components/Student/grades";
 import LiveClasses from "./components/Student/LiveClasses";
 import Messages from "./components/Student/Messages";
 import Profile from "./components/Student/Profile";
-import MySubjects from "./components/Student/MySubjects"; // Import MySubjects
+import MySubjects from "./components/Student/MySubjects"; // My Subjects Page
 
 function App() {
   const student = JSON.parse(localStorage.getItem("student"));
@@ -32,14 +38,31 @@ function App() {
   return (
     <>
       <Navbar />
+
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
+        <Route path="/courses" element={<CoursePage />} />
         <Route path="/login" element={<LoginModal />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/register" element={<RegisterModal />} />
-        <Route path="/courses" element={<CoursePage />} />
 
-        {/* Student Dashboard with nested routes */}
+
+        {/* Admin Routes */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminPrivateRoute>
+              <AdminDashboard />
+            </AdminPrivateRoute>
+          }
+        >
+          <Route path="manage-students" element={<ManageStudents />}/>
+          <Route path="manage-teachers" element={<ManageTeachers />}/>
+        </Route>
+        
+
+        {/* Student Dashboard and Nested Routes */}
         <Route
           path="/student/dashboard"
           element={
@@ -48,34 +71,16 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route path="my-subjects" element={<MySubjects />} /> {/* Nested Route */}
-          <Route path="attendance" element={<Attendance />} /> {/* Nested Route */}
-          <Route path="assignments" element={<Assignment />} /> {/* Nested Route */}
-          <Route path="class-schedule" element={<ClassSchedule />} /> {/* Nested Route */}
-          <Route path="grades" element={<Grades />} /> {/* Nested Route */}
-          <Route path="profile-settings" element={<Profile />} /> {/* Nested Route */}
-          <Route path="messages" element={<Messages />} /> {/* Nested Route */}
-          <Route path="live-classes" element={<LiveClasses />} /> {/* Nested Route */}
-          {/* Add other routes for the student dashboard here */}
+          <Route path="my-subjects" element={<MySubjects />} />
+          <Route path="attendance" element={<Attendance />} />
+          <Route path="assignments" element={<Assignment />} />
+          <Route path="class-schedule" element={<ClassSchedule />} />
+          <Route path="grades" element={<Grades />} />
+          <Route path="live-classes" element={<LiveClasses />} />
+          <Route path="messages" element={<Messages />} />
+          <Route path="profile-settings" element={<Profile />} />
         </Route>
 
-        {/* Admin Dashboard */}
-        <Route
-          path="/admin/dashboard"
-          element={
-            <AdminPrivateRoute>
-              <AdminDashboard />
-            </AdminPrivateRoute>
-          }
-        />
-        <Route
-          path="/admin/users"
-          element={
-            <AdminPrivateRoute>
-              <ManageUsers />
-            </AdminPrivateRoute>
-          }
-        />
       </Routes>
     </>
   );

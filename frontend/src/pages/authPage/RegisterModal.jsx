@@ -14,7 +14,6 @@ const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 const RegisterModal = ({ isOpen, onClose, value, onChange }) => {
 
-
   const subjectOptions = [
     { value: 'Nepali', label: 'Nepali' },
     { value: 'English', label: 'English' },
@@ -211,11 +210,28 @@ const RegisterModal = ({ isOpen, onClose, value, onChange }) => {
     setCanProceed(requiredFields.every((field) => field !== ""));
   };
 
+  const validateTeacherDetails = () => {
+    const requiredFields = [
+      formData.firstName,
+      formData.middleName,
+      formData.lastName,
+      formData.email,
+      formData.password,
+      formData.contact,
+      formData.dob,
+      formData.profilePicture,
+    ];
+
+    // If all required fields are filled, enable the Next button
+    setCanProceed(requiredFields.every((field) => field !== ""));
+  };
+
   useEffect(() => {
     // Revalidate whenever formData changes
     if (currentSection === 1) {
       validateStudentDetails();
-    }
+      validateTeacherDetails();
+    } 
   }, [formData, currentSection]);
 
   return (
@@ -744,6 +760,57 @@ const RegisterModal = ({ isOpen, onClose, value, onChange }) => {
                 </div>
 
               )}
+               {formData.userType === "Teacher" && (
+                <div className="mb-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                   <DatePicker
+                        selected={formData.dob ? new Date(formData.dob) : null}
+                        onChange={(date) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            dob: format(date, 'yyyy-MM-dd'), // ensures correct date
+                          }))
+                        }
+                        dateFormat="dd-MM-yyyy"
+                        showYearDropdown
+                        required
+                        scrollableYearDropdown
+                        yearDropdownItemNumber={100}
+                        placeholderText="Date of Birth"
+                        className="input-style w-full"
+                        maxDate={new Date()} // 🔒 restricts to today or earlier
+                      />
+                  <label className="block mb-1 font-medium">Upload Profile Picture</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleProfilePictureUpload}
+                    required
+                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
+                    file:rounded-md file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-yellow-50 file:text-yellow-700
+                    hover:file:bg-yellow-100
+                    dark:file:bg-gray-800 dark:file:text-yellow-400 dark:hover:file:bg-gray-700"
+                  /></div>
+
+                  {isUploading && (
+                    <div className="mt-2 flex items-center gap-2">
+                      <svg className="animate-spin h-5 w-5 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                      </svg>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">{uploadProgress}%</span>
+                    </div>
+                  )}
+
+                  {!isUploading && formData.profilePicture && uploadProgress === 100 && (
+                    <div className="mt-2 text-green-600 font-medium text-sm">Image Uploaded</div>
+                  )}
+                </div>
+              )}
+
+
               <div className="text-center mt-4">
                 <button
                   type="submit"

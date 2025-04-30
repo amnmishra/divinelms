@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import generateToken from "../utils/generateToken.js";
 
 import Student from "../models/Student.js";
+import Teacher from "../models/Teacher.js";
 
 export const registerAdmin = async (req, res) => {
   const { name, email, password } = req.body;
@@ -78,5 +79,14 @@ export const deleteUser = async (req, res) => {
     res.status(200).json({ message: `${role} deleted` });
   } catch (err) {
     res.status(500).json({ message: "Deletion failed" });
+  }
+};
+
+export const getAllTeachers = async (req, res) => {
+  try {
+    const teachers = await Teacher.find().select("-password"); // hide password
+    res.status(200).json(teachers);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch teachers", error: error.message });
   }
 };

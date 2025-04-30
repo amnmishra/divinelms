@@ -2,7 +2,7 @@ import Teacher from '../models/Teacher.js';
 
 // Register Teacher
 const registerTeacher = async (req, res) => {
-  const { firstName, middleName, lastName, email, password, teacherId, subjects, grade, academicYear, contact, address } = req.body;
+  const { firstName, middleName, lastName, email, password, teacherId, subjects, grade, academicYear, contact, address, profilePicture } = req.body;
 
   try {
     // Check if teacher already exists
@@ -28,6 +28,7 @@ const registerTeacher = async (req, res) => {
       contact,
       address,
       teacherId,
+      profilePicture,
     });
 
     // Hash password before saving
@@ -45,6 +46,7 @@ const registerTeacher = async (req, res) => {
         lastName: teacher.lastName,
         email: teacher.email,
         teacherId: teacher.teacherId,
+        profilePicture: teacher.profilePicture,
         token,
       },
     });

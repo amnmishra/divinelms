@@ -8,18 +8,10 @@ const teacherSchema = new mongoose.Schema({
   dob: String,
   gender: String,
   subjects: [String], // Subjects the teacher is handling
-  grade: String, // The grade level the teacher is responsible for
   academicYear: String, // Current academic year
   department: String, // Department or faculty the teacher belongs to
   contact: String,
-  address: {
-    street: { type: String },
-    city: { type: String },
-    state: { type: String },
-    province: { type: String },
-    country: { type: String },
-    postalCode: { type: String },
-  },
+  address: String,
   email: {
     type: String,
     required: true,
@@ -33,6 +25,9 @@ const teacherSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  profilePicture: {
+    type: String,
   },
 }, { timestamps: true });
 
